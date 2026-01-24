@@ -247,6 +247,39 @@ def generate_melodies(tone_generator, timbre_name):
     error = np.concatenate([note1, note2, np.zeros(int(sample_rate * 0.1))])
     save_wav(timbre_name, 'error.wav', error)
 
+    # 4. subagent_complete - 双音上升（子任务完成）
+    note1 = tone_generator(523, 0.1, sample_rate)  # C5
+    note1 = apply_fade(note1, sample_rate, 0.015)
+    note2 = tone_generator(659, 0.15, sample_rate)  # E5
+    note2 = apply_fade(note2, sample_rate, 0.02)
+
+    subagent_complete = np.concatenate([note1, note2, np.zeros(int(sample_rate * 0.1))])
+    save_wav(timbre_name, 'subagent_complete.wav', subagent_complete)
+
+    # 5. idle_prompt - 经典旋律（空闲提醒）
+    # 旋律：C5 E5 B4 G5 A4 F5 G4（缓慢且匀速）
+    notes_custom = [
+        (523, 0.88),  # C5
+        (659, 0.88),  # E5
+        (494, 0.88),  # B4
+        (784, 0.88),  # G5
+        (440, 0.88),  # A4
+        (699, 0.88),  # F5
+        (392, 1.20),  # G4（结束音稍长）
+    ]
+
+    waveform_parts = []
+    for freq, dur in notes_custom:
+        tone = tone_generator(freq, dur, sample_rate)
+        tone = apply_fade(tone, sample_rate, 0.015)
+        waveform_parts.append(tone)
+
+    waveform_parts.append(np.zeros(int(sample_rate * 0.1)))
+    idle_prompt = np.concatenate(waveform_parts)
+    # 单独减半音量
+    idle_prompt = idle_prompt * 0.25
+    save_wav(timbre_name, 'idle_prompt.wav', idle_prompt)
+
 if __name__ == '__main__':
     create_directories()
 

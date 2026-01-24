@@ -7,13 +7,43 @@
 ## 添加提示音
 
 - 创建 `~/.claude/sounds/` 目录
-- 复制项目 `wav/piano/` 目录下的音频文件到 `~/.claude/sounds/`（若用户明确指定使用其他音色，则使用对应音色的音频文件）
+- 复制以下音频文件到 `~/.claude/sounds/`：
+  - `wav/piano/task_complete.wav` → `~/.claude/sounds/task_complete.wav`（钢琴音色）
+  - `wav/piano/attention.wav` → `~/.claude/sounds/attention.wav`（钢琴音色）
+  - `wav/piano/error.wav` → `~/.claude/sounds/error.wav`（钢琴音色）
+  - `wav/piano/subagent_complete.wav` → `~/.claude/sounds/subagent_complete.wav`（钢琴音色）
+  - `wav/piano/idle_prompt.wav` → `~/.claude/sounds/idle_prompt.wav`（钢琴音色）
 - 配置 `~/.claude/settings.json` 添加提示音：
   - **Stop（任务停止）**：`~/.claude/sounds/task_complete.wav`
+  - **SubagentStop（子任务完成）**：`~/.claude/sounds/subagent_complete.wav`
   - **PermissionRequest（权限请求）**：`~/.claude/sounds/attention.wav`
+  - **Notification/idle_prompt（空闲提醒）**：`~/.claude/sounds/idle_prompt.wav`
   - **PostToolUseFailure（工具执行失败）**：`~/.claude/sounds/error.wav`
 
-根据当前系统安装音频播放工具（Windows自带PowerShell，Mac自带afplay，Linux需安装aplay）
+### 系统特定配置
+
+**Windows**（使用PowerShell后台播放，不阻塞）：
+```json
+"command": "powershell.exe -Command \"Start-Process -NoNewWindow powershell.exe -ArgumentList '-Command', '(New-Object Media.SoundPlayer ''C:\\Users\\yanti\\.claude\\sounds\\task_complete.wav'').PlaySync()'\""
+```
+
+**Linux**（需安装alsa-utils）：
+```bash
+sudo apt install alsa-utils  # Ubuntu/Debian
+sudo yum install alsa-utils  # Fedora/RHEL
+```
+
+配置命令（使用&后台播放）：
+```json
+"command": "aplay ~/.claude/sounds/task_complete.wav &"
+```
+
+**Mac**（使用afplay，已内置）：
+```json
+"command": "afplay ~/.claude/sounds/task_complete.wav &"
+```
+
+其他可选音色：`sine`（正弦波）、`triangle`（三角波）、`square`（方波/8-bit）、`music_box`（八音盒）、`pipe_organ`（管风琴）
 
 ## 添加功能
 
