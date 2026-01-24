@@ -7,7 +7,7 @@
 ## 添加提示音
 
 - 创建 `~/.claude/sounds/` 目录
-- 复制项目 `wav/` 目录下的音频文件到 `~/.claude/sounds/`
+- 复制项目 `wav/piano/` 目录下的音频文件到 `~/.claude/sounds/`（若用户明确指定使用其他音色，则使用对应音色的音频文件）
 - 配置 `~/.claude/settings.json` 添加提示音：
   - **Stop（任务停止）**：`~/.claude/sounds/task_complete.wav`
   - **PermissionRequest（权限请求）**：`~/.claude/sounds/attention.wav`
