@@ -24,8 +24,10 @@
 
 **Windows**（使用PowerShell后台播放，不阻塞）：
 ```json
-"command": "powershell.exe -Command \"Start-Process -NoNewWindow powershell.exe -ArgumentList '-Command', '(New-Object Media.SoundPlayer ''C:\\Users\\yanti\\.claude\\sounds\\task_complete.wav'').PlaySync()'\""
+"command": "powershell.exe -Command \"Start-Process -NoNewWindow powershell.exe -ArgumentList '-Command', '(New-Object Media.SoundPlayer ''C:\\Users\\YOUR_USERNAME\\.claude\\sounds\\task_complete.wav'').PlaySync()'\""
 ```
+
+> YOUR_USERNAME代表当前用户的用户文件夹名称，需使用实际路径替代示例中的路径
 
 **Linux**（需安装alsa-utils）：
 ```bash
