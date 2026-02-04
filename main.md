@@ -54,4 +54,7 @@ sudo yum install alsa-utils  # Fedora/RHEL
 
 ## 配置偏好
 
-- 修改自动压缩提示词的阈值为80%
+在 `~/.claude/settings.json` 的 `env` 中添加：
+```json
+"CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "80"
+```
