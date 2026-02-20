@@ -58,3 +58,49 @@ sudo yum install alsa-utils  # Fedora/RHEL
 ```json
 "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "80"
 ```
+
+## 配置命令行指令白名单
+
+在 `~/.claude/settings.json` 的 `permissions.allow` 中添加安全的命令：
+
+```json
+"permissions": {
+  "allow": [
+    "Bash(git status:*)",
+    "Bash(git diff:*)",
+    "Bash(git log:*)",
+    "Bash(git branch:*)",
+    "Bash(git show:*)",
+    "Bash(git ls-files:*)",
+    "Bash(git rev-parse:*)",
+    "Bash(git remote:*)",
+    "Bash(git config --list:*)",
+    "Bash(npm list:*)",
+    "Bash(npm run:*)",
+    "Bash(npx:*)",
+    "Bash(ls:*)",
+    "Bash(dir:*)",
+    "Bash(cat:*)",
+    "Bash(head:*)",
+    "Bash(tail:*)",
+    "Bash(wc:*)",
+    "Bash(which:*)",
+    "Bash(where:*)",
+    "Bash(echo:*)",
+    "Bash(pwd)",
+    "Bash(whoami)",
+    "Bash(date)",
+    "Bash(uname:*)",
+    "Bash(mkdir:*)",
+    "Bash(touch:*)"
+  ]
+}
+```
+
+**分类说明**：
+- **只读命令**：git 读取、文件查看、系统信息
+- **低风险命令**：
+  - `mkdir` - 创建目录（不覆盖现有内容）
+  - `touch` - 创建文件/更新时间戳（不修改内容）
+  - `echo` - 输出文本（本身无害）
+  - `npm run/npx` - 运行项目脚本（由开发者控制）
